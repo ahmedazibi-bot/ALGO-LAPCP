@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'screens/roadmap_screen.dart';
+
+void main() {
+  runApp(const AlgoLapcpApp());
+}
+
+class AlgoLapcpApp extends StatelessWidget {
+  const AlgoLapcpApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'ALGO/LAPCP',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.tealAccent,
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1E1E1E),
+          elevation: 0,
+          centerTitle: true,
+        ),
+      ),
+      home: const ChallengeRoadmapScreen(),
+    );
+  }
+}

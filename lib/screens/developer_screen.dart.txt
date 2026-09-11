@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+
+class DeveloperScreen extends StatelessWidget {
+  const DeveloperScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('About Developer'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.tealAccent,
+                child: Icon(Icons.person, size: 60, color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Ahmed AZIBI',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Developer & Hydraulic Engineering Student',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 30),
+              _buildInfoRow(Icons.school, 'ENSH - BLIDA - Algiers'),
+              const SizedBox(height: 15),
+              _buildInfoRow(Icons.email, 'Ahmed.Azibi@ensh.dz'),
+              const SizedBox(height: 15),
+              _buildInfoRow(Icons.code, 'GitHub: ahmedazibi-bot'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: Colors.tealAccent),
+        const SizedBox(width: 10),
+        Text(text, style: const TextStyle(fontSize: 16)),
+      ],
+    );
+  }
+}

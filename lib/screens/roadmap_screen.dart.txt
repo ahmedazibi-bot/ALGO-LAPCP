@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'developer_screen.dart'; // ربط واجهة المطور
+
+class ChallengeRoadmapScreen extends StatefulWidget {
+  const ChallengeRoadmapScreen({super.key});
+
+  @override
+  State<ChallengeRoadmapScreen> createState() => _ChallengeRoadmapScreenState();
+}
+
+class _ChallengeRoadmapScreenState extends State<ChallengeRoadmapScreen> {
+  int weeklyMinutesDone = 45; 
+  int challengeDay = 1; 
+
+final List<Map<String, dynamic>> roadMap = [
+    // --- A-1) Statistic 1 ---
+    {'module': 'Statistic 1', 'chapter': '1. Généralités et notion de base', 'isUnlocked': true},
+    {'module': 'Statistic 1', 'chapter': '2. Représentation des données', 'isUnlocked': false},
+    {'module': 'Statistic 1', 'chapter': '3. Paramètres de position', 'isUnlocked': false},
+    {'module': 'Statistic 1', 'chapter': '4. Paramètres de dispersion et forme', 'isUnlocked': false},
+    {'module': 'Statistic 1', 'chapter': '5. Statistique descriptive bivariée', 'isUnlocked': false},
+
+    // --- A-1) Statistic 2 & Probabilités ---
+    {'module': 'Statistic 2 & Probabilités', 'chapter': '1. Analyse combinatoire et calcul des probabilités', 'isUnlocked': false},
+    {'module': 'Statistic 2 & Probabilités', 'chapter': '2. Variables aléatoires discrètes et continues', 'isUnlocked': false},
+    {'module': 'Statistic 2 & Probabilités', 'chapter': '3. Échantillonnage et distributions d\'échantillonnage', 'isUnlocked': false},
+    {'module': 'Statistic 2 & Probabilités', 'chapter': '4. Estimation statistique', 'isUnlocked': false},
+    {'module': 'Statistic 2 & Probabilités', 'chapter': '5. Tests d\'hypothèses', 'isUnlocked': false},
+
+    // --- A-2) The bases of logical thinking and variables ---
+    {'module': 'Logical Thinking & Variables', 'chapter': '1. Meaning of Algorithm', 'isUnlocked': false},
+    {'module': 'Logical Thinking & Variables', 'chapter': '2. Variables, and the type of data', 'isUnlocked': false},
+    {'module': 'Logical Thinking & Variables', 'chapter': '3. How to react with user (Entrée/Sortie)', 'isUnlocked': false},
+
+    // --- A-3) Conditions and structure of controlling ---
+    {'module': 'Conditions', 'chapter': '1. The serie structure to do orders', 'isUnlocked': false},
+    {'module': 'Conditions', 'chapter': '2. Taking the right conditions (If / Else)', 'isUnlocked': false},
+
+    // --- A-4) Loops ---
+    {'module': 'Loops', 'chapter': '1. For', 'isUnlocked': false},
+    {'module': 'Loops', 'chapter': '2. While (loop with condition)', 'isUnlocked': false},
+
+    // --- A-5) Arrays and Matrices ---
+    {'module': 'Arrays and Matrices', 'chapter': '1. Stocking and ordering big data (1D & 2D)', 'isUnlocked': false},
+
+    // --- A-6) Functions & procedures ---
+    {'module': 'Functions', 'chapter': '1. Functions & procedures', 'isUnlocked': false},
+
+    // --- B) Languages ---
+    {'module': 'Languages', 'chapter': '1. C language: types, works, structure', 'isUnlocked': false},
+    {'module': 'Languages', 'chapter': '2. C++ language: types, works, structure', 'isUnlocked': false},
+    {'module': 'Languages', 'chapter': '3. Python: structure, libraries for statistics', 'isUnlocked': false},
+    
+    // --- Final Tests ---
+    {'module': 'Final Tests', 'chapter': 'Open EDG Python Institute (PCAD)', 'isUnlocked': false},
+    {'module': 'Final Tests', 'chapter': 'IBM Data Science Professional Certificate', 'isUnlocked': false},
+  ];
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ALGO / LAPCP Journey', style: TextStyle(letterSpacing: 1.5)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.developer_mode, color: Colors.tealAccent),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DeveloperScreen()),
+              );
+            },
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A1A1A),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.tealAccent.withOpacity(0.3)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Day $challengeDay of 365', 
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+                    const SizedBox(height: 5),
+                    const Text('Keep the logic flowing!', style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+                CircularPercentIndicator(
+                  radius: 35.0,
+                  lineWidth: 6.0,
+                  percent: weeklyMinutesDone / 120,
+                  center: Text("${(weeklyMinutesDone / 120 * 100).toInt()}%"),
+                  progressColor: Colors.tealAccent,
+                  backgroundColor: Colors.grey[800]!,
+                  circularStrokeCap: CircularStrokeCap.round,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              itemCount: roadMap.length,
+              itemBuilder: (context, index) {
+                final challenge = roadMap[index];
+                final isUnlocked = challenge['isUnlocked'];
+                bool showModuleHeader = index == 0 || roadMap[index]['module'] != roadMap[index - 1]['module'];
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (showModuleHeader)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 10, left: 10),
+                        child: Text(
+                          challenge['module'],
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.tealAccent),
+                        ),
+                      ),
+                    Card(
+                      color: isUnlocked ? const Color(0xFF2C2C2C) : const Color(0xFF151515),
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: ListTile(
+                        leading: Icon(
+                          isUnlocked ? Icons.play_arrow_rounded : Icons.lock_outline,
+                          color: isUnlocked ? Colors.tealAccent : Colors.grey[600],
+                        ),
+                        title: Text(
+                          challenge['chapter'],
+                          style: TextStyle(color: isUnlocked ? Colors.white : Colors.grey[600]),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
